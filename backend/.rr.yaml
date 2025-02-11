@@ -1,0 +1,22 @@
+version: "3"
+
+grpc:
+  listen: "tcp://0.0.0.0:9005"
+  proto:
+    - "./proto/ping.proto"
+  workers:
+    command: "php worker.php"
+    pool:
+      num_workers: 2
+      max_jobs: 0
+      allocate_timeout: 60s
+      destroy_timeout: 60s
+
+logs:
+  level: debug
+  mode: development
+  channels:
+    http:
+      level: info
+    grpc:
+      level: debug

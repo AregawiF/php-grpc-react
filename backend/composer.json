@@ -6,7 +6,8 @@
     },
     "require-dev": {
         "grpc/grpc": "^1.36",
-        "spiral/php-grpc": "^1.2"
+        "spiral/php-grpc": "^1.2",
+        "phpunit/phpunit": "^12"
     },
     "autoload": {
         "psr-4": {

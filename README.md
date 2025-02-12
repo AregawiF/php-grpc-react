@@ -1,4 +1,4 @@
-# a simple application php backend grpc react frontend
+# Simple message echo application php backend grpc react frontend
 
 This project demonstrates a simple gRPC setup with a React frontend and a PHP backend using RoadRunner.  Envoy acts as a proxy to enable gRPC-Web communication between the browser and the server. The application sends a message from the frontend to the backend via gRPC and displays the echoed response.
 

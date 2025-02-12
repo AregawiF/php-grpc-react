@@ -1,7 +1,7 @@
 version: "3"
 
 grpc:
-  listen: "tcp://0.0.0.0:9005"
+  listen: "tcp://0.0.0.0:9009"
   proto:
     - "./proto/ping.proto"
   workers:
@@ -20,3 +20,7 @@ logs:
       level: info
     grpc:
       level: debug
+
+
+rpc:
+  listen: "tcp://127.0.0.1:6062"  

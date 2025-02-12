@@ -1,0 +1,2 @@
+src/proto/ping_pb.js
+src/proto/ping_grpc_web_pb.js

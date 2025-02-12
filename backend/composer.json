@@ -2,10 +2,11 @@
     "name": "grpc/backend",
     "description": "Ping GRPC Server",
     "require": {
-        "spiral/php-grpc": "*"
+        "spiral/php-grpc": "^1.2"
     },
     "require-dev": {
-        "grpc/grpc": "^1.36"
+        "grpc/grpc": "^1.36",
+        "spiral/php-grpc": "^1.2"
     },
     "autoload": {
         "psr-4": {

@@ -1,26 +1,11 @@
-
 services:
-  grpc-backend:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  backend:
+    build: .
+    container_name: php-grpc-backend
     ports:
-      - "9005:9005"  # Map host port 9005 to container port 9005
+      - "9001:9001"
+    working_dir: /app
     volumes:
-      - .:/app:cached    # Mount the current directory (read-write, cached)
-    environment:
-        - APP_ENV=local # for the app environment
-    networks:
-      - grpc-network
-
-networks:
-    grpc-network:
-      driver: bridge
-
-
-
-
-    # command: bash -c "php test.php"
-
-    # restart: always  # Uncomment if you want the container to restart automatically
-    # restart: always
+      - .:/app
+    # command: ["tail", "-f", "/dev/null"]
+    command: bash -c 'cd /app && composer install && composer update && /app/grpc/rr-grpc serve -v -d'

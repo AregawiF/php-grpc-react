@@ -1,4 +1,4 @@
-FROM php:8.3-fpm-alpine
+FROM php:8.2-cli
 
 
 RUN apk add --no-cache bash curl git unzip && \
@@ -9,7 +9,7 @@ RUN curl -L -o /tmp/rr-grpc.tar.gz https://github.com/spiral-modules/php-grpc/re
     tar -xzvf /tmp/rr-grpc.tar.gz -C /usr/local/bin/ && \
     rm /tmp/rr-grpc.tar.gz && \
     mv /usr/local/bin/rr-grpc-1.6.0-linux-amd64 /usr/local/bin/rr-grpc && \
-    chmod 755 /usr/local/bin/rr-grpc 
+    chmod +x /usr/local/bin/rr-grpc 
 
 
 # RUN composer install

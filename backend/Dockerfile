@@ -1,19 +1,43 @@
-FROM php:8.2-cli
+FROM ubuntu:noble-20250127
 
+# Install system dependencies and PHP
+RUN apt-get update && apt-get install -y \
+    software-properties-common \
+    curl \
+    git \
+    zip \
+    unzip \
+    && add-apt-repository ppa:ondrej/php \
+    && apt-get update \
+    && apt-get install -y \
+    php8.3-cli \
+    php8.3-zip \
+    php8.3-xml \
+    php8.3-mbstring \
+    php8.3-curl \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN apk add --no-cache bash curl git unzip && \
-    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-    
-RUN curl -L -o /tmp/rr-grpc.tar.gz https://github.com/spiral-modules/php-grpc/releases/download/v1.6.0/rr-grpc-1.6.0-linux-amd64.tar.gz && \
-    tar -xzvf /tmp/rr-grpc.tar.gz -C /usr/local/bin/ && \
-    rm /tmp/rr-grpc.tar.gz && \
-    mv /usr/local/bin/rr-grpc-1.6.0-linux-amd64 /usr/local/bin/rr-grpc && \
-    chmod +x /usr/local/bin/rr-grpc 
+# Set working directory
+WORKDIR /app
 
+# Install rr-grpc
+RUN curl -L https://github.com/spiral-modules/php-grpc/releases/download/v1.6.0/rr-grpc-1.6.0-linux-amd64.tar.gz -o rr-grpc.tar.gz \
+    && tar -xf rr-grpc.tar.gz \
+    && chmod +x rr-grpc-1.6.0-linux-amd64/rr-grpc \
+    && mv rr-grpc-1.6.0-linux-amd64/rr-grpc . \
+    && rm -rf rr-grpc.tar.gz rr-grpc-1.6.0-linux-amd64
 
-# RUN composer install
+RUN ./rr-grpc -v
+RUN composer --version
 
+# Copy project files
+COPY . .
 
-# CMD ["/usr/local/bin/rr-grpc", "serve", "-v", "-d"]
+# Install dependencies
+RUN composer install && composer update
 
+# Start RoadRunner server
+CMD ["./rr-grpc", "serve", "-v", "-d"]

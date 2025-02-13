@@ -1,6 +1,5 @@
 <?php
 
-// namespace App;
 
 use Ping\PingServiceInterface;
 use Spiral\GRPC\ContextInterface;

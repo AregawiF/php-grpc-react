@@ -27,10 +27,10 @@ WORKDIR /app
 RUN curl -L https://github.com/spiral-modules/php-grpc/releases/download/v1.6.0/rr-grpc-1.6.0-linux-amd64.tar.gz -o rr-grpc.tar.gz \
     && tar -xf rr-grpc.tar.gz \
     && chmod +x rr-grpc-1.6.0-linux-amd64/rr-grpc \
-    && mv rr-grpc-1.6.0-linux-amd64/rr-grpc . \
+    && mv rr-grpc-1.6.0-linux-amd64/rr-grpc /usr/local/bin \
     && rm -rf rr-grpc.tar.gz rr-grpc-1.6.0-linux-amd64
 
-RUN ./rr-grpc -v
+RUN rr-grpc -v
 RUN composer --version
 
 # Copy project files
@@ -40,4 +40,4 @@ COPY . .
 RUN composer install && composer update
 
 # Start RoadRunner server
-CMD ["./rr-grpc", "serve", "-v", "-d"]
+CMD ["rr-grpc", "serve", "-v", "-d"]

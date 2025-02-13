@@ -1,0 +1,30 @@
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+  
+  backend:
+    build: ./backend
+    ports:
+      - "9009:9009"
+    volumes:
+      - ./backend:/app  
+
+  envoy:
+    image: envoyproxy/envoy:v1.28-latest
+    volumes:
+      - ./envoy.yaml:/etc/envoy/envoy.yaml
+    ports:
+      - "8080:8080"
+      - "9901:9901"
+    depends_on:
+      - backend
+
+    command: /usr/local/bin/envoy -c /etc/envoy/envoy.yaml
+
+networks:
+  default:
+    driver: bridge
